@@ -2,7 +2,7 @@
 #include "DHT.h"
 
 //definire sensor calitate aer + variabile
-int pinSenzorAer = 5;
+int pinSenzorAer = 35;
 float senzorAer;
 String calitateAer;
 

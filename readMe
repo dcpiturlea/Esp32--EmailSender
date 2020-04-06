@@ -1,0 +1,7 @@
+Aplicatia este construita in Arduino si se foloseste de un sensor temperatura+umiditate si un sensor de calitate al aeurului
+pentru a trimite un email cu toate aceste detalii.
+
+Hardware:
+1. placa dezvoltare ESP32 WIFI
+2. Senzor DHT22(umiditate+temperatura)
+3. Senzor de calitate al aerului

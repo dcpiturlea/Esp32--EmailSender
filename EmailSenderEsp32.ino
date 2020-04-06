@@ -1,12 +1,13 @@
 #include <DHT.h>
 #include "ESP32_MailClient.h"
+#include "DHT.h"
 
 
 int pinSenzorAer = 35;
 float senzorAer;
 String calitateAer;
 
-#define DHTPIN 4 
+#define DHTPIN 4
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 float umiditate;
@@ -14,16 +15,19 @@ float temperatura;
 
 // TREBUIE INLOCUIT CU CREDENTIALELE WIFI PERSONALE
 const char* ssid = "DIGI-24-75831C";
-const char* password = "831E020293";
+const char* password = "parola";
 
 // Pentru a trimite emailuri de pe gmail trebuie folosit portul 465 ssl si serverul smtp: smtp.gmail.com
 // Trebuie bifata casuta "lasa google sa fie folosit de aplicatii nesigure": https://myaccount.google.com/lesssecureapps?pli=1
-#define emailSenderAccount    "smartech.iot@gmail.com"    
-#define emailSenderPassword   "AAAaaa111222"
+#define emailSenderAccount    "smartech.iot@gmail.com"
+#define emailSenderPassword   "parola"
 #define emailRecipient        "dcpiturlea@gmail.com"
 #define smtpServer            "smtp.gmail.com"
 #define smtpServerPort        465
 #define emailSubject          "ESP32 Test"
+
+  // crerea unui obiect SMTPDATA
+SMTPData smtpData;
 
 
 
@@ -32,8 +36,8 @@ void setup(){
   // crerea unui obiect SMTPDATA
 SMTPData smtpData;
 }
- 
-  
+
+
 void loop() {
   dht.begin();
   CitireSenzorAer();
@@ -43,7 +47,6 @@ void loop() {
   EmailSettings();
   SendEmail();
 }
-
 
 
 // Callback function to get the Email sending status
@@ -83,11 +86,11 @@ void WIFIConnect(){
 void SMTPConnect(){
   Serial.println("Preparing to send email");
   Serial.println();
-  
+
   // setarea parametrilor obiectului tip SMTPDATA, metoda setarea conectarii
   smtpData.setLogin(smtpServer, smtpServerPort, emailSenderAccount, emailSenderPassword);
 
-  // For library version 1.2.0 and later which STARTTLS protocol was supported,the STARTTLS will be 
+  // For library version 1.2.0 and later which STARTTLS protocol was supported,the STARTTLS will be
   // enabled automatically when port 587 was used, or enable it manually using setSTARTTLS function.
   //smtpData.setSTARTTLS(true);
 }
@@ -96,7 +99,7 @@ void SMTPConnect(){
 
 
 void EmailSettings(){
-  / setarea adresei 
+  // setarea adresei
   smtpData.setSender("ESP32", emailSenderAccount);
 
   // setarea prioritatii emailului
@@ -127,7 +130,7 @@ void EmailSettings(){
 
 
 void SendEmail(){
-  
+
   //Se incearca trimiterea mailului,
   if (!MailClient.sendMail(smtpData))
     Serial.println("Error sending Email, " + MailClient.smtpErrorReason());

@@ -1,8 +1,16 @@
+#include <DHT.h>
 #include "ESP32_MailClient.h"
 
-int pinSenzorAer = 4;
+
+int pinSenzorAer = 35;
 float senzorAer;
 String calitateAer;
+
+#define DHTPIN 4 
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+float umiditate;
+float temperatura;
 
 // TREBUIE INLOCUIT CU CREDENTIALELE WIFI PERSONALE
 const char* ssid = "DIGI-24-75831C";
@@ -23,11 +31,13 @@ const char* password = "831E020293";
 void setup(){
   // crerea unui obiect SMTPDATA
 SMTPData smtpData;
-
+}
  
   
 void loop() {
+  dht.begin();
   CitireSenzorAer();
+  CitireDHT();
   WIFIConnect();
   SMTPConnect();
   EmailSettings();
@@ -98,7 +108,8 @@ void EmailSettings(){
   // Set the message with HTML format
   //smtpData.setMessage("<div style=\"color:#2f4468;\"><h1>Hello World!</h1><p>- Sent from ESP32 board</p></div>", true);
   // Set the email message in text format (raw)
-  smtpData.setMessage("In bucatarie calitatea aerului este: "+calitateAer+" / 250)", false);
+  smtpData.setMessage("Calitate Aer: "+calitateAer+" / 500), Temperatura: "+temperatura
+  +" *C, Umiditate: "+umiditate+" %", false);
 
   // adaugare destinatari, poti fi mai multi
   smtpData.addRecipient(emailRecipient);
@@ -133,4 +144,7 @@ void CitireSenzorAer(){
   calitateAer= String(senzorAer);
 }
 
+void CitireDHT(){
+  umiditate = dht.readHumidity();
+  temperatura=dht.readTemperature();
 }

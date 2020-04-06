@@ -16,12 +16,12 @@ float temperatura;
 
 // TREBUIE INLOCUIT CU CREDENTIALELE WIFI PERSONALE
 const char* ssid = "DIGI-24-75831C";
-const char* password = "831E020293";
+const char* password = "parola";
 
 // Pentru a trimite emailuri de pe gmail trebuie folosit portul 465 ssl si serverul smtp: smtp.gmail.com
 // Trebuie bifata casuta "lasa google sa fie folosit de aplicatii nesigure": https://myaccount.google.com/lesssecureapps?pli=1
 #define emailSenderAccount    "smartech.iot@gmail.com"    
-#define emailSenderPassword   "AAAaaa111222"
+#define emailSenderPassword   "parola"
 #define emailRecipient        "dcpiturlea@gmail.com"
 #define smtpServer            "smtp.gmail.com"
 #define smtpServerPort        465
